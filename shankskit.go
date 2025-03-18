@@ -8,6 +8,14 @@ import (
 	"reflect"; 	
 ) 
 
+type List struct { 
+	contents []interface{} 
+}
+
+func (l *list) append (object interface{}) { 
+	l.contents = append(l.contents, object) 
+}
+
 func Input(prompt string) string {
 	fmt.Print(prompt)
 	reader := bufio.NewReader(os.Stdin)
