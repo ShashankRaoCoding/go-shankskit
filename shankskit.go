@@ -9,11 +9,11 @@ import (
 ) 
 
 type List struct { 
-	contents []interface{} 
+	Contents []interface{} 
 }
 
 func (l *List) Append (object interface{}) { 
-	l.contents = append(l.contents, object) 
+	l.COntents = append(l.Contents, object) 
 }
 
 func Input(prompt string) string {
