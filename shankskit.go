@@ -12,7 +12,7 @@ type List struct {
 	contents []interface{} 
 }
 
-func (l *list) append (object interface{}) { 
+func (l *List) append (object interface{}) { 
 	l.contents = append(l.contents, object) 
 }
 
