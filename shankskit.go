@@ -13,7 +13,7 @@ type List struct {
 }
 
 func (l *List) Append (object interface{}) { 
-	l.COntents = append(l.Contents, object) 
+	l.Contents = append(l.Contents, object) 
 }
 
 func Input(prompt string) string {
