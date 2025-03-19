@@ -14,7 +14,7 @@ type List struct {
 func (l *List) Append (object interface{}) { 
 	l.Contents = append(l.Contents, object) 
 }
-func (l *List) Length () { 
+func (l *List) Length() int { 
 	return len(l) 
 }
 
