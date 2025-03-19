@@ -11,9 +11,11 @@ import (
 type List struct { 
 	Contents []interface{} 
 }
-
 func (l *List) Append (object interface{}) { 
 	l.Contents = append(l.Contents, object) 
+}
+func (l *List) Length () { 
+	return len(l) 
 }
 
 func Input(prompt string) string {
