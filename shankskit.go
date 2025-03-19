@@ -123,28 +123,6 @@ func SplitString(plaintext string, seperator string) []string {
 	return strings.Split(plaintext, seperator)
 }
 
-func readLines(path string) []string { 
-	var lines []string 
-	file, err := os.Open(path) 
-	HandleErrors(err)
-	scanner := bufio.NewScanner(file) 
-	for scanner.Scan() { 
-		lines = append(lines, scanner.Text() ) 
-	} 
-	return lines 
-}
-
-func ReadFile(path string) string { 
-	file, err := os.Open(path) 
-	HandleErrors(err)
-	scanner := bufio.NewScanner(file) 
-	output := "" 
-	for scanner.Scan() { 
-		output = output + scanner.Text() 
-	} 
-	return output 
-}
-
 func FileExists(path string) bool { 
 	_, err := os.Stat(path) 
 	if err != nil && os.IsNotExist(err) { 
@@ -154,6 +132,6 @@ func FileExists(path string) bool {
 	}
 }
 
-func Type(object interface{}) reflect.Type { 
+func GetType(object interface{}) reflect.Type { 
 	return reflect.TypeOf(object) 
 }
