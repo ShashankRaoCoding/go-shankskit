@@ -9,8 +9,8 @@ import (
 ) 
 
 // Creates a new List object with some default values 
-func NewList(contents ...interface{}) List { 
-	return List{ 
+func NewList(contents ...interface{}) *List { 
+	return &List{ 
 		Contents: contents, 
 		RangeIndex: -1 , 
 		RangeItem: nil , 
@@ -70,24 +70,23 @@ type List struct {
 		}
 	}
 
-	func (l *List) GetRepresentation() string { 
+	func (l *List) GetSyntax() string { 
 		representation := `[` 
-		for _, item := range l.Contents { 
+		for l.Range() { 
+			item := l.RangeItem 
 			switch typedItem := item.(type) { 
-				case []interface{} : 
-					tempItem := NewList(typedItem) 
-					representation += tempItem.GetRepresentation() 
-					representation += `, `
 				case string : 
-					representation += `'` + GetValue(typedItem) + `'` 
-					representation += `, `
-				case List : 
-					representation += typedItem.GetRepresentation() 
-					representation += `, `
+					representation += fmt.Sprintf(`'%+v'`, typedItem) 
+				case *List : 
+					representation += typedItem.GetSyntax() 
+				case []interface{}: 
+					tempItem := NewList(typedItem...) 
+					representation += tempItem.GetSyntax() 
 				default : 
-					representation += GetValue(typedItem) 
-					representation += `, `
+					representation += fmt.Sprintf(`%+v`, typedItem) 
 			}
+			
+			representation += ", " 
 		}
 		if 1 < len(representation) { 
 			representation = representation[0:-2+len(representation)] 
