@@ -1,7 +1,7 @@
 package shankskit 
 
 import ( 
-	"https://github.com/asticode/go-astilectron" 
+	"github.com/asticode/go-astilectron" 
 	"log" 
 	"net/http" 
 	"fmt"; 
