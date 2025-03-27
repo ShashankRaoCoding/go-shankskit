@@ -238,7 +238,7 @@ func PaddRight(text string, totallength int, paddingcharacter string) string {
 	return output
 }
 
-func GetValue(item any) string {
+func GetValue(item interface{}) string {
 	return fmt.Sprintf(`%+v`, item)
 }
 
@@ -257,7 +257,7 @@ func HandleErrors(err error) {
 	}
 }
 
-func Print(plaintext any) {
+func Print(plaintext interface{}) {
 	fmt.Println(plaintext)
 }
 
@@ -300,7 +300,7 @@ func FileExists(path string) bool {
 	}
 }
 
-func Type(object any) reflect.Type {
+func Type(object interface{}) reflect.Type {
 	return reflect.TypeOf(object)
 }
 
