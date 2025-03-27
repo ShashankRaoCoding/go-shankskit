@@ -101,84 +101,144 @@ func (l *List) GetSyntax() string {
 	return representation
 }
 
-type Grid struct {
-	Rows       int
-	Columns    int
-	Dimensions []int
-	Table      *List
-	RangeIndex int
-	RangeRow   *List
-}
-
-func (g *Grid) Range() bool {
-	g.RangeIndex += 1
-	if g.RangeIndex == g.Rows {
-		g.RangeIndex = -1
-		g.RangeRow = NewList()
-		return false
-	} else {
-		row := (*g.Table).Contents[g.RangeIndex]
-		typedRow, ok := row.(List)
-		if ok {
-			g.RangeRow = &typedRow
-		}
-		return true
-	}
-}
-
-func (g *Grid) ValueAt(column_index int, row_index int) interface{} {
-	if g.Rows <= row_index {
-		// do nothing
-	} else if g.Columns <= column_index {
-		// do nothing
-	} else {
-		row := (*g.Table).Contents[row_index]
-		typedRow, ok := row.(List)
-		if ok {
-			value := typedRow.Contents[column_index]
-			typedValue, ok := value.(interface{})
-			if ok {
-				return typedValue
-			}
-		}
-	}
-	return nil
-}
-func (g *Grid) GetSyntax() string {
-	output := ""
-	for g.Range() {
-		row := g.RangeRow
-		output += row.GetSyntax() + "\n"
-	}
-
-	return output
-
-}
-
 func NewGrid(rows int, columns int) *Grid {
-	table := NewList()
-	for s := 0; s < rows; s++ {
-		row := NewList()
-		for i := 0; i < columns; i++ {
-			row.Append(nil)
+	placeholderValue := "nil"
+	contents := [][]string{}
+	for rowIndex := 0; rowIndex < rows; rowIndex++ {
+		row_instance := []string{}
+		for columnIndex := 0; columnIndex < columns; columnIndex++ {
+			row_instance = append(row_instance, placeholderValue)
 		}
-		table.Append(*row)
+		contents = append(contents, row_instance)
 	}
-	grid := &Grid{
-		Rows:    rows,
-		Columns: columns,
-		Dimensions: []int{
-			rows,
-			columns,
-		},
-		Table:      table,
-		RangeIndex: -1,
-		RangeRow:   NewList(),
+
+	gridInstance := Grid{
+		Contents: contents,
+		Rows:     rows,
+		Columns:  columns,
 	}
-	return grid
+
+	return &gridInstance
 }
 
-func GetValue(item interface{}) string {
+type Grid struct {
+	Contents [][]string
+	Rows     int
+	Columns  int
+}
+
+func (g *Grid) GetValue(xCoord int, yCoord int) string {
+	return g.Contents[yCoord][xCoord]
+}
+
+func (g *Grid) GetSyntax() string {
+	var syntax string
+	var padding_size int
+	var value string
+	for yCoord := range g.Rows {
+		for xCoord := range g.Columns {
+			padding_size = max(padding_size, len(g.GetValue(xCoord, yCoord)))
+		}
+	}
+
+	for yCoord := range g.Rows {
+		for xCoord := range g.Columns {
+			value = g.GetValue(xCoord, yCoord)
+			syntax += PaddRight(value, padding_size, " ") + "|"
+		}
+		syntax += "\n"
+	}
+
+	return syntax
+}
+
+func (g *Grid) InsertRow(row []string, index int) {
+	// Check for out-of-bounds index
+	if index < 0 || index > g.Rows {
+		fmt.Println("Error: Invalid index for row insertion.")
+		return
+	}
+
+	// Ensure the row has the correct number of columns
+	if len(row) != g.Columns {
+		fmt.Println("Error: Row length must match the number of columns in the grid.")
+		return
+	}
+
+	var contents [][]string
+	rows := g.Rows
+
+	for i := 0; i < rows; i++ {
+		if i == index {
+			contents = append(contents, row) // Insert the new row
+		}
+		contents = append(contents, g.Contents[i])
+	}
+
+	// Edge case: If inserting at the last index, append at the end
+	if index == g.Rows {
+		contents = append(contents, row)
+	}
+
+	g.Contents = contents
+	g.Rows++
+}
+
+func (g *Grid) InsertColumn(column []string, index int) {
+	if index < 0 || index > g.Columns {
+		fmt.Println("Invalid index for column insertion")
+		return
+	}
+
+	if len(column) != g.Rows {
+		fmt.Println("Error: Column length must match the number of rows in the grid.")
+		return
+	}
+
+	for rowIndex := 0; rowIndex < g.Rows; rowIndex++ {
+		newRow := make([]string, 0, g.Columns+1) // Create a new row with increased capacity
+		for colIndex := 0; colIndex < g.Columns; colIndex++ {
+			if colIndex == index {
+				newRow = append(newRow, column[rowIndex]) // Insert before index
+			}
+			newRow = append(newRow, g.Contents[rowIndex][colIndex])
+		}
+		if index == g.Columns { // Edge case: inserting at the last index
+			newRow = append(newRow, column[rowIndex])
+		}
+		g.Contents[rowIndex] = newRow
+	}
+	g.Columns++
+}
+
+func (g *Grid) Print() {
+	syntax := g.GetSyntax()
+	Print(syntax)
+}
+
+func PaddLeft(text string, totallength int, paddingcharacter string) string {
+	var paddingLength int
+	var output string
+	paddingLength = totallength - len(text)
+	for i := 0; i < paddingLength; i++ {
+		output += paddingcharacter
+	}
+	output += text
+	return output
+}
+
+func PaddRight(text string, totallength int, paddingcharacter string) string {
+	var paddingLength int
+	var output string
+	output += text
+	paddingLength = totallength - len(text)
+	for i := 0; i < paddingLength; i++ {
+		output += paddingcharacter
+	}
+	return output
+}
+
+func GetValue(item any) string {
 	return fmt.Sprintf(`%+v`, item)
 }
 
@@ -197,7 +257,7 @@ func HandleErrors(err error) {
 	}
 }
 
-func Print(plaintext interface{}) {
+func Print(plaintext any) {
 	fmt.Println(plaintext)
 }
 
@@ -227,6 +287,10 @@ func ReadFile(path string) string {
 	return output
 }
 
+func IntToString(i int) string {
+	return fmt.Sprintf("%d", i)
+}
+
 func FileExists(path string) bool {
 	_, err := os.Stat(path)
 	if err != nil && os.IsNotExist(err) {
@@ -236,7 +300,7 @@ func FileExists(path string) bool {
 	}
 }
 
-func Type(object interface{}) reflect.Type {
+func Type(object any) reflect.Type {
 	return reflect.TypeOf(object)
 }
 
