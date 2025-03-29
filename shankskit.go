@@ -77,8 +77,7 @@ func StartApp(appName string, port string, routes map[string]http.HandlerFunc) {
 }
 
 func Respond(filePath string, w http.ResponseWriter, data interface{}) {
-	tmpl, err := template.ParseFiles(filePath)
-	HandleErrors(err)
+	tmpl, _ := template.ParseFiles(filePath)
 	tmpl.Execute(w, data)
 }
 
@@ -96,7 +95,7 @@ func ListSubPaths(dir string) []string {
 	for _, file := range files {
 		if file.IsDir() {
 			subDir := dir + string(os.PathSeparator) + file.Name()
-			output = append(output, listSubPaths(subDir)...)
+			output = append(output, ListSubPaths(subDir)...)
 		} else {
 			output = append(output, dir+string(os.PathSeparator)+file.Name())
 		}
