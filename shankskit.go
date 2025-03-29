@@ -308,12 +308,12 @@ func Type(object interface{}) reflect.Type {
 
 func StartApp(appName string, port string, routes map[string]http.HandlerFunc) { // Create a new Astilectron instance
 
-	server := &http.Server{
-		Addr: ":" + port,
-	}
-
 	for url, handlerfunc := range routes {
 		http.HandleFunc(url, handlerfunc)
+	}
+
+	server := &http.Server{
+		Addr: ":" + port,
 	}
 
 	go func() {
