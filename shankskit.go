@@ -137,7 +137,9 @@ func (g *Grid) GetSyntax() string {
 	var value string
 	for yCoord := 0; yCoord < g.Rows; yCoord++ {
 		for xCoord := 0; xCoord < g.Columns; xCoord++ {
-			padding_size = max(padding_size, len(g.GetValue(xCoord, yCoord)))
+			if padding_size < len(g.GetValue(xCoord, yCoord)) {
+				padding_size = len(g.GetValue(xCoord, yCoord))
+			}
 		}
 	}
 
