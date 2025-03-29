@@ -82,7 +82,7 @@ func Respond(filePath string, w http.ResponseWriter, data interface{}) {
 	tmpl.Execute(w, data)
 }
 
-func listSubPaths(dir string) []string {
+func ListSubPaths(dir string) []string {
 	var output []string
 
 	// Open the directory
