@@ -135,14 +135,14 @@ func (g *Grid) GetSyntax() string {
 	var syntax string
 	var padding_size int
 	var value string
-	for yCoord := range g.Rows {
-		for xCoord := range g.Columns {
+	for yCoord := 0; yCoord < g.Rows; yCoord++ {
+		for xCoord := 0; xCoord < g.Columns; xCoord++ {
 			padding_size = max(padding_size, len(g.GetValue(xCoord, yCoord)))
 		}
 	}
 
-	for yCoord := range g.Rows {
-		for xCoord := range g.Columns {
+	for yCoord := 0; yCoord < g.Rows; yCoord++ {
+		for xCoord := 0; xCoord < g.Columns; xCoord++ {
 			value = g.GetValue(xCoord, yCoord)
 			syntax += PaddRight(value, padding_size, " ") + "|"
 		}
