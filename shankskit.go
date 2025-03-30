@@ -77,10 +77,19 @@ func StartApp(appName string, port string, routes map[string]http.HandlerFunc) {
 }
 
 func Respond(filePath string, w http.ResponseWriter, data interface{}) {
-	tmpl, _ := template.ParseFiles(filePath)
-	tmpl.Execute(w, data)
-}
+	tmpl, err := template.ParseFiles(filePath)
+	if err != nil {
+		log.Println("Error parsing template:", err)
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		return
+	}
 
+	err = tmpl.Execute(w, data)
+	if err != nil {
+		log.Println("Error executing template:", err)
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+	}
+}
 func ListSubPaths(dir string) []string {
 	var output []string
 
