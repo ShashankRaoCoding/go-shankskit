@@ -11,7 +11,7 @@ import (
 	"github.com/asticode/go-astilectron"
 )
 
-func StartApp(appName string, port string, routes map[string]http.HandlerFunc) { // Create a new Astilectron instance
+func StartApp(appName string, port string, transparent bool, routes map[string]http.HandlerFunc) { // Create a new Astilectron instance
 
 	for url, handlerfunc := range routes {
 		http.HandleFunc(url, handlerfunc)
@@ -53,6 +53,7 @@ func StartApp(appName string, port string, routes map[string]http.HandlerFunc) {
 		Fullscreen: &fullscreen,
 		Width:      &width,
 		Height:     &height,
+		Transparent: &transparent, 
 		Frame:      &frameless,
 	})
 
@@ -76,7 +77,7 @@ func StartApp(appName string, port string, routes map[string]http.HandlerFunc) {
 	fmt.Println("Server stopped")
 }
 
-func Respond(filePath string, w http.ResponseWriter, data interface{}) {
+func Respond(w http.ResponseWriter, filePath string, data interface{}) {
 	tmpl, err := template.ParseFiles(filePath)
 	if err != nil {
 		log.Println("Error parsing template:", err)
