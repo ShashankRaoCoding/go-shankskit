@@ -91,6 +91,7 @@ func Respond(w http.ResponseWriter, filePath string, data interface{}) {
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 	}
 }
+
 func ListSubPaths(dir string) []string {
 	var output []string
 
