@@ -11,7 +11,7 @@ import (
 	"github.com/asticode/go-astilectron"
 )
 
-func StartApp(appName string, port string, transparent bool, routes map[string]http.HandlerFunc) { // Create a new Astilectron instance
+func StartApp(port string, routes map[string]http.HandlerFunc, appName string, transparent bool, alwaysontop bool) { // Create a new Astilectron instance
 
 	for url, handlerfunc := range routes {
 		http.HandleFunc(url, handlerfunc)
@@ -55,6 +55,7 @@ func StartApp(appName string, port string, transparent bool, routes map[string]h
 		Height:     &height,
 		Transparent: &transparent, 
 		Frame:      &frameless,
+		AlwaysOnTop:       &alwaysontop,
 	})
 
 	if err != nil {
