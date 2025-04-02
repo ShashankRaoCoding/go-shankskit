@@ -62,6 +62,8 @@ func StartApp(port string, routes map[string]http.HandlerFunc, appName string, t
 		log.Fatal(err)
 	}
 
+	w.SetIgnoreMouseEvents(true, map[string]interface{}{"forward": true})
+
 	// Show the window
 	if err := w.Create(); err != nil {
 		log.Fatal(err)
