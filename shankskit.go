@@ -11,7 +11,7 @@ import (
 	"github.com/asticode/go-astilectron"
 )
 
-func StartApp(port string, routes map[string]http.HandlerFunc, appName string, transparent bool, alwaysontop bool) { // Create a new Astilectron instance
+func StartApp(port string, routes map[string]http.HandlerFunc, appName string, transparent bool, alwaysontop bool) (*astilectron.Window, *astilectron.Astilectron, *http.Server) { // Create a new Astilectron instance
 
 	for url, handlerfunc := range routes {
 		http.HandleFunc(url, handlerfunc)
@@ -39,23 +39,22 @@ func StartApp(port string, routes map[string]http.HandlerFunc, appName string, t
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer a.Close()
 	if err := a.Start(); err != nil {
 		log.Fatal(err)
 	}
 
-	frameless := false
+	frameless := true
 	width := 600
 	height := 800
 	fullscreen := true
 	// Create a new window (frameless window, no UI elements)
 	w, err := a.NewWindow(url, &astilectron.WindowOptions{
-		Fullscreen: &fullscreen,
-		Width:      &width,
-		Height:     &height,
-		Transparent: &transparent, 
-		Frame:      &frameless,
-		AlwaysOnTop:       &alwaysontop,
+		Fullscreen:  &fullscreen,
+		Width:       &width,
+		Height:      &height,
+		Transparent: &transparent,
+		Frame:       &frameless,
+		AlwaysOnTop: &alwaysontop,
 	})
 
 	if err != nil {
@@ -67,6 +66,11 @@ func StartApp(port string, routes map[string]http.HandlerFunc, appName string, t
 		log.Fatal(err)
 	}
 
+	return w, a, server
+}
+
+func HandleShutDown(a *astilectron.Astilectron, server *http.Server) {
+	defer a.Close()
 	// Wait for the window to be closed
 	a.Wait() // Blocks here until the window is closed
 
@@ -76,6 +80,7 @@ func StartApp(port string, routes map[string]http.HandlerFunc, appName string, t
 	}
 
 	fmt.Println("Server stopped")
+
 }
 
 func Respond(w http.ResponseWriter, filePath string, data interface{}) {
