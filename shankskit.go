@@ -11,7 +11,7 @@ import (
 	"github.com/asticode/go-astilectron"
 )
 
-func StartApp(port string, routes map[string]http.HandlerFunc, appName string, transparent bool, alwaysontop bool) (*astilectron.Window, *astilectron.Astilectron, *http.Server) { // Create a new Astilectron instance
+func StartApp(port string, routes map[string]http.HandlerFunc, appName string, fullscreen bool, visibleUI bool, transparent bool, alwaysontop bool) (*astilectron.Window, *astilectron.Astilectron, *http.Server) { // Create a new Astilectron instance
 
 	for url, handlerfunc := range routes {
 		http.HandleFunc(url, handlerfunc)
@@ -43,17 +43,15 @@ func StartApp(port string, routes map[string]http.HandlerFunc, appName string, t
 		log.Fatal(err)
 	}
 
-	frameless := true
 	width := 600
 	height := 800
-	fullscreen := true
 	// Create a new window (frameless window, no UI elements)
 	w, err := a.NewWindow(url, &astilectron.WindowOptions{
 		Fullscreen:  &fullscreen,
 		Width:       &width,
 		Height:      &height,
 		Transparent: &transparent,
-		Frame:       &frameless,
+		Frame:       &visibleUI,
 		AlwaysOnTop: &alwaysontop,
 	})
 
@@ -117,6 +115,6 @@ func ListSubPaths(dir string) []string {
 			output = append(output, dir+string(os.PathSeparator)+file.Name())
 		}
 	}
-	// return subpaths 
+	// return subpaths
 	return output
 }
