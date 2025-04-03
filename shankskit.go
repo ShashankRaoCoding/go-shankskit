@@ -12,13 +12,14 @@ import (
 )
 
 func StartApp(settings AppSettings) (*astilectron.Window, *astilectron.Astilectron, *http.Server) { // Create a new Astilectron instance
-	var appName = AppSettings.appName
-	var port = AppSettings.port
-	var transparent = AppSettings.transparent
-	var alwaysOnTop = AppSettings.alwaysOnTop
-	var fullscreen = AppSettings.fullscreen
-	var visibleUI = AppSettings.visibleUI
-	var routes = AppSettings.routes
+	var appName = AppSettings.AppName
+	var port = AppSettings.Port
+	var transparent = AppSettings.Transparent
+	var alwaysOnTop = AppSettings.AlwaysOnTop
+	var fullscreen = AppSettings.Fullscreen
+	var visibleUI = AppSettings.VisibleUI
+	var routes = AppSettings.Routes 
+
 	for url, handlerfunc := range routes {
 		http.HandleFunc(url, handlerfunc)
 	}
