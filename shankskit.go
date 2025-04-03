@@ -18,7 +18,7 @@ func StartApp(settings AppSettings) (*astilectron.Window, *astilectron.Astilectr
 	var alwaysOnTop = AppSettings.AlwaysOnTop
 	var fullscreen = AppSettings.Fullscreen
 	var visibleUI = AppSettings.VisibleUI
-	var routes = AppSettings.Routes 
+	var routes = AppSettings.Routes
 
 	for url, handlerfunc := range routes {
 		http.HandleFunc(url, handlerfunc)
@@ -88,16 +88,16 @@ func HandleShutDown(a *astilectron.Astilectron, server *http.Server) {
 
 }
 
-type AppSettings struct { 
-	port string,
-	routes map[string]http.HandlerFunc,
-	appName string,
-	fullscreen bool,
-	visibleUI bool,
-	transparent bool,
-	alwaysOnTop bool,
+type AppSettings struct {
+	Port        string
+	Routes      map[string]http.HandlerFunc
+	AppName     string
+	Fullscreen  bool
+	VisibleUI   bool
+	Transparent bool
+	AlwaysOnTop bool
 }
-	
+
 func Respond(w http.ResponseWriter, filePath string, data interface{}) {
 	tmpl, err := template.ParseFiles(filePath)
 	if err != nil {
