@@ -12,13 +12,13 @@ import (
 )
 
 func StartApp(settings AppSettings) (*astilectron.Window, *astilectron.Astilectron, *http.Server) { // Create a new Astilectron instance
-	appName := AppSettings.AppName
-	port := AppSettings.Port
-	transparent := AppSettings.Transparent
-	alwaysontop := AppSettings.AlwaysOnTop
-	fullscreen := AppSettings.Fullscreen
-	visibleUI := AppSettings.VisibleUI
-	routes := AppSettings.Routes
+	appName := settings.AppName
+	port := settings.Port
+	transparent := settings.Transparent
+	alwaysontop := settings.AlwaysOnTop
+	fullscreen := settings.Fullscreen
+	visibleUI := settings.VisibleUI
+	routes := settings.Routes
 	width := 600
 	height := 800
 
