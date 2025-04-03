@@ -81,6 +81,16 @@ func HandleShutDown(a *astilectron.Astilectron, server *http.Server) {
 
 }
 
+type AppSettings struct { 
+	port string,
+	routes map[string]http.HandlerFunc,
+	appName string,
+	fullscreen bool,
+	visibleUI bool,
+	transparent bool,
+	alwaysOnTop bool,
+}
+	
 func Respond(w http.ResponseWriter, filePath string, data interface{}) {
 	tmpl, err := template.ParseFiles(filePath)
 	if err != nil {
