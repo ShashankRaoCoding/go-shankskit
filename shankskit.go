@@ -11,8 +11,14 @@ import (
 	"github.com/asticode/go-astilectron"
 )
 
-func StartApp(port string, routes map[string]http.HandlerFunc, appName string, fullscreen bool, visibleUI bool, transparent bool, alwaysontop bool) (*astilectron.Window, *astilectron.Astilectron, *http.Server) { // Create a new Astilectron instance
-
+func StartApp(settings AppSettings) (*astilectron.Window, *astilectron.Astilectron, *http.Server) { // Create a new Astilectron instance
+	var appName = AppSettings.appName
+	var port = AppSettings.port
+	var transparent = AppSettings.transparent
+	var alwaysOnTop = AppSettings.alwaysOnTop
+	var fullscreen = AppSettings.fullscreen
+	var visibleUI = AppSettings.visibleUI
+	var routes = AppSettings.routes
 	for url, handlerfunc := range routes {
 		http.HandleFunc(url, handlerfunc)
 	}
