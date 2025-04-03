@@ -117,6 +117,6 @@ func ListSubPaths(dir string) []string {
 			output = append(output, dir+string(os.PathSeparator)+file.Name())
 		}
 	}
-
+	// return subpaths 
 	return output
 }
