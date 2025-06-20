@@ -175,5 +175,3 @@ This library is provided **as-is**, without warranty of any kind, express or imp
 By using this package, you agree that the author assumes **no responsibility for negligence, misuse, or misinterpretation** of the software.
 
 ---
-
-Would you like this turned into a `README.md` or into inline doc comments within the package source?
