@@ -42,7 +42,7 @@ func main() {
         Transparent: false,
     }
 
-    w, a, server := shankskit.StartApp(settings)
+    _, a, server := shankskit.StartApp(settings)
     shankskit.HandleShutDown(a, server)
 }
 
