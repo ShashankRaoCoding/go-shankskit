@@ -115,26 +115,3 @@ func Respond(w http.ResponseWriter, filePath string, data interface{}) {
 	}
 }
 
-func ListSubPaths(dir string) []string {
-	var output []string
-
-	// Open the directory
-	files, err := os.ReadDir(dir)
-	if err != nil {
-		fmt.Println("Error reading directory:", err)
-		return output
-	}
-
-	// Iterate through the files and check if they are directories or files
-	for _, file := range files {
-		if file.IsDir() {
-			subDir := dir + string(os.PathSeparator) + file.Name()
-			output = append(output, ListSubPaths(subDir)...)
-		} else {
-			output = append(output, dir+string(os.PathSeparator)+file.Name())
-		}
-	}
-	// return subpaths
-	return output
-}
-
