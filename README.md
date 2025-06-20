@@ -3,17 +3,7 @@
 
 # 📦 go-shankskit
 
-**go-shankskit** is a minimal Go library that lets you build desktop GUI apps using [Astilectron](https://github.com/asticode/go-astilectron) with an embedded HTTP server. Ideal for quick tools, dashboards, and web-based UIs wrapped into native desktop apps.
-
----
-
-## ✨ Features
-
-* 📦 Self-contained desktop apps written in Go
-* 🖼️ Frameless, fullscreen, or windowed UI
-* 🌐 Embedded HTTP server with custom routes
-* 📁 Static file serving support (optional)
-* 🧠 Simple API and graceful shutdown
+**go-shankskit** is a minimal personal use Go library that lets you build desktop GUI apps using [Astilectron](https://github.com/asticode/go-astilectron) with an embedded HTTP server. Ideal for quick tools, dashboards, and web-based UIs wrapped into native desktop apps.
 
 ---
 
