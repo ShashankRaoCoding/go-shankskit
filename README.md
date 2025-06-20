@@ -152,16 +152,9 @@ Let me know if you want a bundler config template!
 
 ---
 
-## 💬 License
-
-MIT — use freely and build cool stuff!
-
----
-
 ## ⚠️ Disclaimer
 
 This library is provided **as-is**, without warranty of any kind, express or implied. Use of this library is at your own risk. In no event shall the author or contributors be held liable for any damages or losses, including but not limited to direct, indirect, incidental, or consequential damages, loss of data, or business interruption arising out of the use of or inability to use this software, even if advised of the possibility of such damages.
 
 By using this package, you agree that the author assumes **no responsibility for negligence, misuse, or misinterpretation** of the software.
 
----
