@@ -33,7 +33,7 @@ func StartApp(settings AppSettings) (*astilectron.Window, *astilectron.Astilectr
 	}
 
 	go func() {
-		if err := server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+		if err := server.Serve(ln); err != nil && err != http.ErrServerClosed {
 			fmt.Println("Error starting server:", err)
 		}
 	}()
