@@ -22,14 +22,14 @@ func StartApp(settings AppSettings) (*astilectron.Window, *astilectron.Astilectr
 	width := settings.Width
 	height := settings.Height
 
-	for url, handlerfunc := range routes {
-		http.HandleFunc(url, handlerfunc)
-	}
-
 	ln, _ := net.Listen("tcp", ":0")
 	port := fmt.Sprintf("%v", ln.Addr().(*net.TCPAddr).Port)
+	mux := http.NewServeMux()
+	for url, handler := range routes {
+		mux.HandleFunc(url, handler)
+	}
 	server := &http.Server{
-		Addr: ":" + port,
+		Handler: mux,
 	}
 
 	go func() {
@@ -45,7 +45,7 @@ func StartApp(settings AppSettings) (*astilectron.Window, *astilectron.Astilectr
 	logger := log.New(os.Stderr, "", log.LstdFlags)
 	a, err := astilectron.New(logger, astilectron.Options{
 		AppName:        appName,
-		SingleInstance: true,
+		SingleInstance: false,
 	})
 	if err != nil {
 		log.Fatal(err)
