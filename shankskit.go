@@ -4,10 +4,11 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"net"
 	"net/http"
 	"os"
 	"text/template"
-	"net" 
+
 	"github.com/asticode/go-astilectron"
 )
 
@@ -26,7 +27,7 @@ func StartApp(settings AppSettings) (*astilectron.Window, *astilectron.Astilectr
 	}
 
 	ln, _ := net.Listen("tcp", ":0")
-	port := ln.Addr().(*net.TCPAddr).Port
+	port := fmt.Sprintf("%v", ln.Addr().(*net.TCPAddr).Port)
 	server := &http.Server{
 		Addr: ":" + port,
 	}
@@ -114,4 +115,3 @@ func Respond(w http.ResponseWriter, filePath string, data interface{}) {
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 	}
 }
-
