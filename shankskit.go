@@ -7,13 +7,12 @@ import (
 	"net/http"
 	"os"
 	"text/template"
-
+	"net" 
 	"github.com/asticode/go-astilectron"
 )
 
 func StartApp(settings AppSettings) (*astilectron.Window, *astilectron.Astilectron, *http.Server) { // Create a new Astilectron instance
 	appName := settings.AppName
-	port := settings.Port
 	transparent := settings.Transparent
 	alwaysontop := settings.AlwaysOnTop
 	fullscreen := settings.Fullscreen
@@ -26,6 +25,8 @@ func StartApp(settings AppSettings) (*astilectron.Window, *astilectron.Astilectr
 		http.HandleFunc(url, handlerfunc)
 	}
 
+	ln, _ := net.Listen("tcp", ":0")
+	port := ln.Addr().(*net.TCPAddr).Port
 	server := &http.Server{
 		Addr: ":" + port,
 	}
@@ -89,7 +90,6 @@ func HandleShutDown(a *astilectron.Astilectron, server *http.Server) {
 }
 
 type AppSettings struct {
-	Port        string
 	Routes      map[string]http.HandlerFunc
 	AppName     string
 	Width       int
