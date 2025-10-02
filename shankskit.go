@@ -1,6 +1,7 @@
 package shankskit
 
 import (
+	"embed"
 	"context"
 	"fmt"
 	"log"
