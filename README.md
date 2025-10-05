@@ -1,13 +1,23 @@
-📦 go-shankskit
 
-go-shankskit is a small Go library to help you build desktop GUI apps using Astilectron
- with an embedded HTTP server.
+
+# 📦 go-shankskit
+
+**go-shankskit** is a small Go library to help you build desktop GUI apps using [Astilectron](https://github.com/asticode/go-astilectron) with an embedded HTTP server.
 It’s ideal for quickly wrapping a local web UI into a native-looking desktop window.
 
-📥 Installation
-go get github.com/shashankraocoding/go-shankskit
+---
 
-🚀 Quick Start
+## 📥 Installation
+
+```bash
+go get github.com/shashankraocoding/go-shankskit
+```
+
+---
+
+## 🚀 Quick Start
+
+```go
 package main
 
 import (
@@ -41,15 +51,19 @@ func main() {
 func index(w http.ResponseWriter, r *http.Request) {
     shankskit.Respond(w, "index.html", nil)
 }
+```
 
+Run this and you’ll see `Server running on http://localhost:<random port>` in your terminal.
 
-Run this and you’ll see Server running on http://localhost:<random port> in your terminal.
+---
 
-🧱 API Reference
-type AppSettings
+## 🧱 API Reference
+
+### `type AppSettings`
 
 Configuration for your desktop app:
 
+```go
 type AppSettings struct {
     Routes      map[string]http.HandlerFunc // Route handlers
     AppName     string                      // Application name
@@ -60,31 +74,43 @@ type AppSettings struct {
     Transparent bool                        // Transparent window
     AlwaysOnTop bool                        // Keep window on top
 }
+```
 
+> **Note:** The HTTP server always binds to a random free port.
+> The chosen port is printed to stdout.
 
-Note: The HTTP server always binds to a random free port.
-The chosen port is printed to stdout.
+---
 
-func StartApp(settings AppSettings) (*astilectron.Window, *astilectron.Astilectron, *http.Server)
+### `func StartApp(settings AppSettings) (*astilectron.Window, *astilectron.Astilectron, *http.Server)`
 
 Starts the HTTP server and creates an Astilectron window pointing to it.
 
-Returns:
+**Returns:**
 Window, Astilectron instance, HTTP server instance.
 
-func HandleShutDown(a *astilectron.Astilectron, server *http.Server)
+---
+
+### `func HandleShutDown(a *astilectron.Astilectron, server *http.Server)`
 
 Blocks until the window is closed, then gracefully shuts down the embedded HTTP server.
 
-func Respond(w http.ResponseWriter, filePath string, data interface{})
+---
+
+### `func Respond(w http.ResponseWriter, filePath string, data interface{})`
 
 Serve a Go template file from disk.
 
-func RespondWithEmbed(w http.ResponseWriter, filePath string, fs fs.FS, data interface{})
+---
 
-Serve a Go template embedded with embed.FS (via template.ParseFS).
+### `func RespondWithEmbed(w http.ResponseWriter, filePath string, fs fs.FS, data interface{})`
 
-📂 Example HTML Template (index.html)
+Serve a Go template embedded with `embed.FS` (via `template.ParseFS`).
+
+---
+
+## 📂 Example HTML Template (`index.html`)
+
+```html
 <!DOCTYPE html>
 <html>
 <head><title>Hello</title></head>
@@ -92,25 +118,33 @@ Serve a Go template embedded with embed.FS (via template.ParseFS).
     <h1>Hello, {{.}}</h1>
 </body>
 </html>
+```
 
-🛠 Dependencies
+---
 
-go-astilectron
+## 🛠 Dependencies
 
-Standard Go libraries (net/http, text/template, etc.)
+* [go-astilectron](https://github.com/asticode/go-astilectron)
+* Standard Go libraries (`net/http`, `text/template`, etc.)
 
-📦 Packaging Your App
+---
+
+## 📦 Packaging Your App
 
 To bundle your app into an executable with Electron:
 
-Use astilectron-bundler
+1. Use [astilectron-bundler](https://github.com/asticode/go-astilectron-bundler)
+2. Configure `bundler.json`
+3. Run `go generate` + `go build`
 
-Configure bundler.json
+---
 
-Run go generate + go build
+## ⚠️ Disclaimer
 
-⚠️ Disclaimer
-
-This library is provided as-is, without warranty of any kind.
+This library is provided **as-is**, without warranty of any kind.
 Use of this library is at your own risk.
-The author assumes no responsibility for damages or misuse.
+The author assumes **no responsibility** for damages or misuse.
+
+---
+
+Would you like me to also include a “Getting the random port” helper function in the README (so you can display it inside the app window too)?
