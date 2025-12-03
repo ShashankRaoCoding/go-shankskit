@@ -22,25 +22,8 @@ func StartApp(settings AppSettings) (*astilectron.Window, *astilectron.Astilectr
 	width := settings.Width
 	height := settings.Height
 
-	ln, _ := net.Listen("tcp", ":0")
-	port := fmt.Sprintf("%v", ln.Addr().(*net.TCPAddr).Port)
-	mux := http.NewServeMux()
-	for url, handler := range routes {
-		mux.HandleFunc(url, handler)
-	}
-	server := &http.Server{
-		Handler: mux,
-	}
-
-	go func() {
-		if err := server.Serve(ln); err != nil && err != http.ErrServerClosed {
-			fmt.Println("Error starting server:", err)
-		}
-	}()
-
+	port := StartServer(routes) 
 	url := "http://localhost:" + port
-
-	fmt.Println("Server running on", url)
 
 	logger := log.New(os.Stderr, "", log.LstdFlags)
 	a, err := astilectron.New(logger, astilectron.Options{
