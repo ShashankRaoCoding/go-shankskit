@@ -22,7 +22,7 @@ func StartApp(settings AppSettings) (*astilectron.Window, *astilectron.Astilectr
 	width := settings.Width
 	height := settings.Height
 
-	port := StartServer(routes) 
+	port, server := StartServer(routes) 
 	url := "http://localhost:" + port
 
 	logger := log.New(os.Stderr, "", log.LstdFlags)
@@ -114,7 +114,7 @@ func Respond(w http.ResponseWriter, filePath string, data interface{}) {
 	}
 }
 
-func StartServer(routes map[string]http.HandlerFunc) string {
+func StartServer(routes map[string]http.HandlerFunc) (string, *http.Server) {
 
 	ln, _ := net.Listen("tcp", ":0")
 	port := fmt.Sprintf("%v", ln.Addr().(*net.TCPAddr).Port)
@@ -134,6 +134,6 @@ func StartServer(routes map[string]http.HandlerFunc) string {
 
 	log.Printf("Access the server at localhost:%s", port)
 
-	return port
+	return port, server 
 
 }
