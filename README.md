@@ -147,4 +147,3 @@ The author assumes **no responsibility** for damages or misuse.
 
 ---
 
-Would you like me to also include a “Getting the random port” helper function in the README (so you can display it inside the app window too)?
