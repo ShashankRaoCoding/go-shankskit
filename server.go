@@ -5,7 +5,7 @@ import (
 	"log"
 	"net"
 	"net/http"
-	"template"
+	"html/template"
 	"io/fs"
 )
 
