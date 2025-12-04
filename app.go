@@ -9,8 +9,6 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"text/template"
-	"io/fs"
 	"github.com/asticode/go-astilectron"
 )
 
