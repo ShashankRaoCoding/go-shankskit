@@ -5,6 +5,7 @@ import (
 	"log"
 	"net"
 	"net/http"
+	"io/fs"
 )
 
 func StartServer(routes map[string]http.HandlerFunc) (string, *http.Server) {
