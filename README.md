@@ -137,6 +137,9 @@ To bundle your app into an executable with Electron:
 2. Configure `bundler.json`
 3. Run `go generate` + `go build`
 
+> [!Remember!]
+> To include astilectron in the build, build with the tag: `-tags astilectron`
+> 
 ---
 
 ## ⚠️ Disclaimer
