@@ -39,6 +39,7 @@ func main() {
         VisibleUI:   true,
         AlwaysOnTop: false,
         Transparent: false,
+        Webview: true, 
     }
 
     // Start the embedded HTTP server and Astilectron window
