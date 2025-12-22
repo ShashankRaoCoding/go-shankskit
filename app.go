@@ -48,7 +48,7 @@ func StartApp(settings AppSettings) (*astilectron.Window, *astilectron.Astilectr
     	WebPreferences: &astilectron.WebPreferences{
         	WebviewTag:       astilectron.PtrBool(true), 
         	ContextIsolation: astilectron.PtrBool(true),
-    	}
+    	},
 	})
 
 	if err != nil {
