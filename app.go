@@ -47,8 +47,7 @@ func StartApp(settings AppSettings) (*astilectron.Window, *astilectron.Astilectr
 		Frame:       &visibleUI,
 		AlwaysOnTop: &alwaysontop,
     	WebPreferences: &astilectron.WebPreferences{
-        	WebviewTag:       settings.Webview, 
-        	ContextIsolation: settings.Webview,
+        	WebviewTag:       &settings.Webview, 
     	},
 	})
 
