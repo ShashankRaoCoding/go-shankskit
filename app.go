@@ -14,6 +14,7 @@ import (
 
 func StartApp(settings AppSettings) (*astilectron.Window, *astilectron.Astilectron, *http.Server) { // Create a new Astilectron instance
 	appName := settings.AppName
+	webview := settings.Webview
 	transparent := settings.Transparent
 	alwaysontop := settings.AlwaysOnTop
 	fullscreen := settings.Fullscreen
@@ -46,8 +47,8 @@ func StartApp(settings AppSettings) (*astilectron.Window, *astilectron.Astilectr
 		Frame:       &visibleUI,
 		AlwaysOnTop: &alwaysontop,
     	WebPreferences: &astilectron.WebPreferences{
-        	WebviewTag:       astilectron.PtrBool(true), 
-        	ContextIsolation: astilectron.PtrBool(true),
+        	WebviewTag:       settings.Webview, 
+        	ContextIsolation: settings.Webview,
     	},
 	})
 
