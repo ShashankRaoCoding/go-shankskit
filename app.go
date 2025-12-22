@@ -87,4 +87,5 @@ type AppSettings struct {
 	VisibleUI   bool
 	Transparent bool
 	AlwaysOnTop bool
+	Webview bool
 }
