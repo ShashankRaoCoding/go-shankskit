@@ -33,20 +33,19 @@ func StartServer(routes map[string]http.HandlerFunc) (string, *http.Server) {
 
 }
 
-
 func RespondWithEmbed(w http.ResponseWriter, filePath string, fs fs.FS, data interface{}) {
-	tmpl, err := template.ParseFS(fs, filePath)
-	if err != nil {
-		log.Println("Error parsing template:", err)
-		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
-		return
-	}
+    tmpl, err := template.New(filepath.Base(filePath)).ParseFS(fs, filePath)
+    if err != nil {
+        log.Println("Error parsing template:", err)
+        http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+        return
+    }
 
-	err = tmpl.Execute(w, data)
-	if err != nil {
-		log.Println("Error executing template:", err)
-		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
-	}
+    err = tmpl.Execute(w, data)
+    if err != nil {
+        log.Println("Error executing template:", err)
+        http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+    }
 }
 
 func Respond(w http.ResponseWriter, filePath string, data interface{}) {
