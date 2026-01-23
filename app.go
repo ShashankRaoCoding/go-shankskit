@@ -60,7 +60,7 @@ func StartApp(settings AppSettings) (*astilectron.Window, *astilectron.Astilectr
 		log.Fatal(err)
 	}
 
-	return w, a, server
+	return w, a, server, logger 
 }
 
 func HandleShutDown(a *astilectron.Astilectron, server *http.Server) {
