@@ -12,7 +12,7 @@ import (
 	"github.com/asticode/go-astilectron"
 )
 
-func StartApp(settings AppSettings) (*astilectron.Window, *astilectron.Astilectron, *http.Server, *Logger) { // Create a new Astilectron instance
+func StartApp(settings AppSettings) (*astilectron.Window, *astilectron.Astilectron, *http.Server, *log.Logger) { // Create a new Astilectron instance
 	appName := settings.AppName
 	webview := settings.Webview
 	transparent := settings.Transparent
